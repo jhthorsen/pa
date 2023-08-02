@@ -22,7 +22,10 @@ pw_add() {
     [ -z "$FORCE" ] && [ -f "$name.age" ] && die "Password '$name' already exists"
     check_bounds "$name"
 
-    if yn "Generate a password?"; then
+    if [ ! -t 0 ]; then
+        age --encrypt -R "$recipients_file" -o "$name.age" < /dev/stdin
+        return $?;
+    elif yn "Generate a password?"; then
         pass=$(rand_chars "$PA_LENGTH" "$PA_PATTERN")
     else
         # 'sread()' is a simple wrapper function around 'read'
@@ -263,7 +266,7 @@ main() {
 
     # Ensure that we leave the terminal in a usable
     # state on exit or Ctrl+C.
-    [ -t 1 ] && trap 'stty echo icanon' INT EXIT
+    [ -t 0 ] && trap 'stty echo icanon' INT EXIT
 
     local cmd="usage"
     local -a unparsed
