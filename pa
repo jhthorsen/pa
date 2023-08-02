@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # pa - a simple password manager based on age
 
