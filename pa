@@ -117,7 +117,7 @@ rand_chars() {
 }
 
 yn() {
-    printf '%s [y/n]: ' "$1"
+    printf '%s [y/N]: ' "$1"
 
     # Enable raw input to allow for a single byte to be read from
     # stdin without needing to wait for the user to press Return.
